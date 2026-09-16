@@ -1,0 +1,31 @@
+{
+  "name": "PBDG - রক্তদাতা গ্রুপ",
+  "short_name": "PBDG",
+  "description": "স্বেচ্ছায় রক্তদান করুন, জীবন বাঁচান — পীরগঞ্জ ব্লাড ডোনার গ্রুপ",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#dc2626",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

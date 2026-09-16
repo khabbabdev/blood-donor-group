@@ -54,10 +54,16 @@ app.use(cors({
   credentials: true,
 }));
 
-// Health check
-app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'ok', message: 'Blood Donor Group API is running', timestamp: new Date() });
+// Health checks
+app.get(['/', '/health', '/api/health'], (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    message: 'Blood Donor Group API is running',
+    environment: process.env.NODE_ENV || 'development',
+    timestamp: new Date()
+  });
 });
+
 
 // Logging middleware
 if (process.env.NODE_ENV === 'development') {

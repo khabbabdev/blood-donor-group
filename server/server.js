@@ -67,6 +67,23 @@ if (process.env.NODE_ENV === 'development') {
 // Rate limiting
 app.use(rateLimiter);
 
+// Ensure database connection in serverless environment
+app.use(async (req, res, next) => {
+  if (req.path === '/api/health') {
+    return next();
+  }
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('Database connection failed in middleware:', error.message);
+    return res.status(500).json({
+      success: false,
+      error: 'Database connection failed. Please ensure MONGODB_URI is properly configured.'
+    });
+  }
+});
+
 // Route files
 const authRoutes = require('./routes/authRoutes');
 const donorRoutes = require('./routes/donorRoutes');
@@ -85,8 +102,8 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/donations', donationRoutes);
 app.use('/api/upload', uploadRoutes);
 
-// Serve static files from client build in production with optimal cache headers
-if (process.env.NODE_ENV === 'production') {
+// Serve static files from client build in standalone production (not on Vercel, which serves client directly via CDN)
+if (process.env.NODE_ENV === 'production' && !process.env.VERCEL) {
   app.use(express.static(path.join(__dirname, '..', 'client', 'dist'), {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
@@ -107,8 +124,8 @@ app.use('/api', (req, res) => {
 // Error handler middleware (must be after API routes)
 app.use(errorHandler);
 
-// Serve index.html for SPA routes (must be after all other routes)
-if (process.env.NODE_ENV === 'production') {
+// Serve index.html for SPA routes (standalone production only; Vercel handles SPA routes via vercel.json)
+if (process.env.NODE_ENV === 'production' && !process.env.VERCEL) {
   app.get('*', (req, res) => {
     const indexPath = path.join(__dirname, '..', 'client', 'dist', 'index.html');
     res.sendFile(indexPath, (err) => {

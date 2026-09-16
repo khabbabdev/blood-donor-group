@@ -5,8 +5,8 @@
   "private": true,
   "main": "server/server.js",
   "scripts": {
-    "postinstall": "npm install --prefix client && npm run build --prefix client",
-    "build": "npm install --prefix client && npm run build --prefix client",
+    "postinstall": "npm install --prefix client --include=dev",
+    "build": "npm run build --prefix client",
     "start": "node server/server.js",
     "dev": "node server/server.js"
   },

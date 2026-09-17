@@ -87,7 +87,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-200 dark:border-gray-800 mt-12 pt-8 text-center">
           <p className="text-gray-500 dark:text-gray-500 text-sm">
-            &copy;  2026 - {new Date().getFullYear()} পানিতলাহাট ব্লাড ডোনার গ্রুপ (PBDG). সর্বস্বত্ব সংরক্ষিত 🩸 Developed by <a href="https://khabbab50.github.io/khabbabDev/" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-600 transition-colors">Khabbab.dev</a>
+            &copy;  2026 - {new Date().getFullYear()} পানিতলাহাট ব্লাড ডোনার গ্রুপ (PBDG). সর্বস্বত্ব সংরক্ষিত 🩸 Developed by <a href="https://khabbabdev.github.io/khabbab-programmer/" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-600 transition-colors">Khabbab.dev</a>
           </p>
         </div>
       </div>

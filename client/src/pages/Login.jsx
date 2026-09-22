@@ -19,6 +19,7 @@ const Login = () => {
     } catch (err) {
       const message =
         err.response?.data?.message ||
+        err.response?.data?.error ||
         "লগইন ব্যর্থ হয়েছে। ইমেইল বা মোবাইল নাম্বার ভুল।";
       toast.error(message);
     }

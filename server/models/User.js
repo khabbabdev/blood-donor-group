@@ -51,6 +51,10 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Mixed,
     default: {}
   },
+  reason: {
+    type: String,
+    default: ''
+  },
   resetPasswordToken: String,
   resetPasswordExpire: Date
 }, {

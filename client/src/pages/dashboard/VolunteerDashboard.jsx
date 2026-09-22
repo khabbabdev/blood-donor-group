@@ -173,7 +173,7 @@ const VolunteerDashboard = () => {
                       <span className="flex items-center gap-1">
                         <FiMapPin /> {req.hospital}
                       </span>
-                      <span>পরিমাণ: {req.units}</span>
+                      <span>পরিমাণ: {req.unitsNeeded || req.units || 1} ব্যাগ</span>
                       <span className="flex items-center gap-1">
                         <FiPhone /> {req.contactNumber || req.contactPhone}
                       </span>

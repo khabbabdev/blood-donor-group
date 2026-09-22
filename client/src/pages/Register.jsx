@@ -26,7 +26,7 @@ const Register = () => {
       }
       navigate('/login');
     } catch (err) {
-      const message = err.response?.data?.message || 'রেজিস্ট্রেশন ব্যর্থ হয়েছে।';
+      const message = err.response?.data?.message || err.response?.data?.error || 'রেজিস্ট্রেশন ব্যর্থ হয়েছে।';
       toast.error(message);
     }
   };

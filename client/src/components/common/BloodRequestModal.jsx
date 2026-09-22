@@ -39,7 +39,7 @@ const BloodRequestModal = ({ isOpen, onClose, onSuccess }) => {
       onClose();
       if (onSuccess) onSuccess();
     } catch (err) {
-      const message = err.response?.data?.message || 'আবেদন পাঠাতে ব্যর্থ হয়েছে। আবার চেষ্টা করুন।';
+      const message = err.response?.data?.message || err.response?.data?.error || 'আবেদন পাঠাতে ব্যর্থ হয়েছে। আবার চেষ্টা করুন।';
       toast.error(message);
     } finally {
       setLoading(false);

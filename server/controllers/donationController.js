@@ -105,6 +105,7 @@ exports.verifyDonation = async (req, res, next) => {
     }
 
     donation.verifiedBy = req.user.id;
+    donation.status = req.body.status === 'pending' ? 'pending' : 'completed';
     await donation.save();
 
     res.status(200).json({

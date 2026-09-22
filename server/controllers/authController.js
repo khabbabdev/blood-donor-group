@@ -6,7 +6,7 @@ const sendEmail = require('../utils/sendEmail');
 
 exports.register = async (req, res, next) => {
   try {
-    const { name, email, password, phone, role = 'donor', bloodGroup, address, lastDonationDate, lastDonation } = req.body;
+    const { name, email, password, phone, role = 'donor', bloodGroup, address, lastDonationDate, lastDonation, reason } = req.body;
 
     // Prevent direct registration as admin
     if (role === 'admin') {
@@ -32,6 +32,7 @@ exports.register = async (req, res, next) => {
       phone,
       role: assignedRole,
       address,
+      reason: reason || '',
       isApproved: assignedRole === 'donor' // Volunteers require admin approval
     });
 
@@ -145,7 +146,7 @@ exports.getMe = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
   try {
-    const { name, email, phone, avatar, address, weight, dateOfBirth, medicalConditions, lastDonationDate, lastDonation } = req.body;
+    const { name, email, phone, avatar, address, weight, dateOfBirth, medicalConditions, lastDonationDate, lastDonation, reason } = req.body;
 
     const userUpdate = {};
     if (name !== undefined) userUpdate.name = name;
@@ -153,6 +154,7 @@ exports.updateProfile = async (req, res, next) => {
     if (phone !== undefined) userUpdate.phone = phone;
     if (avatar !== undefined) userUpdate.avatar = avatar;
     if (address !== undefined) userUpdate.address = address;
+    if (reason !== undefined) userUpdate.reason = reason;
 
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,

@@ -16,11 +16,10 @@ import {
 
 import { BLOOD_GROUPS, DISTRICTS, DEMO_DONORS } from '../utils/constants';
 
-// Helper to convert English digits to Bengali digits
-const toBnNum = (num) => {
+// Format numbers clearly for optimal readability and instant comprehension
+const toClearNum = (num) => {
   if (num === undefined || num === null) return '';
-  const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-  return String(num).replace(/\d/g, (d) => bnDigits[Number(d)]);
+  return String(num);
 };
 
 // Generates smart pagination range with ellipsis (e.g., [1, '...', 4, 5, 6, '...', 10])

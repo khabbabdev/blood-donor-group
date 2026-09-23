@@ -47,8 +47,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900 dark:text-white">ফোন</h4>
-                  <p className="text-gray-600 dark:text-gray-400">(বোরহান) ০১৭১১-৬০৬৮৬৩</p>
-                  <p className="text-gray-600 dark:text-gray-400">(আবু হাসান) ০১৩১২-৩০৬৩০৯</p>
+                  <p><a href="tel:01711606863" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 transition-colors font-semibold tracking-wide">(বোরহান) ০১৭১১-৬০৬৮৬৩</a></p>
+                  <p><a href="tel:01312306309" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 transition-colors font-semibold tracking-wide">(আবু হাসান) ০১৩১২-৩০৬৩০৯</a></p>
                 </div>
               </div>
 

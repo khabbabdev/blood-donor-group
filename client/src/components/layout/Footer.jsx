@@ -60,11 +60,11 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <FiPhone className="text-primary-600 flex-shrink-0" />
-                <span className="text-gray-600 dark:text-gray-400">(বোরহান) ০১৭১১-৬০৬৮৬৩</span>
+                <a href="tel:01711606863" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 transition-colors font-semibold tracking-wide">(বোরহান) 01711-606863</a>
               </li>
               <li className="flex items-center gap-3">
                 <FiPhone className="text-primary-600 flex-shrink-0" />
-                <span className="text-gray-600 dark:text-gray-400">(আবু হাসান) ০১৩১২-৩০৬৩০৯</span>
+                <a href="tel:01312306309" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 transition-colors font-semibold tracking-wide">(আবু হাসান) 01312-306309</a>
               </li>
               <li className="flex items-center gap-3">
                 <FiMail className="text-primary-600 flex-shrink-0" />

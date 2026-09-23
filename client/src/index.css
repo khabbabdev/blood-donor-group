@@ -22,9 +22,10 @@
   body {
     @apply bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 font-sans;
     text-rendering: optimizeLegibility;
-    font-feature-settings: "liga" 1, "kern" 1;
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
+    font-feature-settings: "liga" 1, "kern" 1, "tnum" 1;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     background-image:
       radial-gradient(circle at center,
         rgba(0, 0, 0, 0.015) 1px,
@@ -71,6 +72,13 @@
 
   .glass {
     @apply bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl;
+  }
+
+  .num-clear {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: "tnum" 1, "cv02" 1, "cv03" 1, "cv04" 1, "cv11" 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.015em;
   }
 }
 

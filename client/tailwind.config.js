@@ -12,7 +12,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"Noto Sans Bengali"', '"Hind Siliguri"', 'Inter', 'sans-serif'],
+        sans: ['Inter', '"Noto Sans Bengali"', '"Hind Siliguri"', 'sans-serif'],
+        bengali: ['"Noto Sans Bengali"', '"Hind Siliguri"', 'sans-serif'],
+        num: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
         primary: {

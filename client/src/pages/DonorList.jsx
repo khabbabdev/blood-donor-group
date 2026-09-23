@@ -17,7 +17,7 @@ import {
 import { BLOOD_GROUPS, DISTRICTS, DEMO_DONORS } from '../utils/constants';
 
 // Format numbers clearly for optimal readability and instant comprehension
-const toClearNum = (num) => {
+const toBnNum = (num) => {
   if (num === undefined || num === null) return '';
   return String(num);
 };

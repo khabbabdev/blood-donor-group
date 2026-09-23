@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -14,10 +14,57 @@ const Navbar = () => {
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const mobileMenuRef = useRef(null);
+  const menuButtonRef = useRef(null);
+  const dropdownRef = useRef(null);
 
+  // Close mobile menu on route change
   useEffect(() => {
     setIsOpen(false);
+    setDropdownOpen(false);
   }, [location.pathname]);
+
+  // Close mobile menu & dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      // Close mobile menu if click is outside menu and toggle button
+      if (
+        isOpen &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target) &&
+        menuButtonRef.current &&
+        !menuButtonRef.current.contains(e.target)
+      ) {
+        setIsOpen(false);
+      }
+      // Close desktop dropdown if click is outside
+      if (
+        dropdownOpen &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isOpen, dropdownOpen]);
+
+  // Close mobile menu on window resize (if switching to desktop)
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -83,7 +130,7 @@ const Navbar = () => {
             </button>
 
             {user ? (
-              <div className="relative">
+              <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   className="flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-lg transition-colors"
@@ -152,7 +199,10 @@ const Navbar = () => {
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-3">
             <button
-              onClick={() => setIsRequestModalOpen(true)}
+              onClick={() => {
+                setIsRequestModalOpen(true);
+                setIsOpen(false);
+              }}
               className="btn-primary py-1.5 px-3 text-xs flex items-center gap-1 font-medium"
             >
               <FiPlusCircle size={14} />
@@ -165,8 +215,11 @@ const Navbar = () => {
               {theme === 'dark' ? <FiSun size={20} /> : <FiMoon size={20} />}
             </button>
             <button
+              ref={menuButtonRef}
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 text-gray-600 dark:text-gray-300"
+              aria-label={isOpen ? 'মেনু বন্ধ করুন' : 'মেনু খুলুন'}
+              aria-expanded={isOpen}
             >
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
@@ -177,6 +230,7 @@ const Navbar = () => {
         <AnimatePresence>
           {isOpen && (
             <motion.div
+              ref={mobileMenuRef}
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}

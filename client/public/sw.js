@@ -1,30 +1,33 @@
-const CACHE_NAME = 'pbdg-v1';
+const CACHE_NAME = 'pbdg-pwa-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
   '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  '/icons/icon-512x512.png',
+  '/icons/icon-maskable-512x512.png',
+  '/icons/logo.png'
 ];
 
-// Install Event
+// Install Event - cache core static files immediately
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(STATIC_ASSETS).catch((err) => {
-        console.warn('[SW] Pre-caching error:', err);
+        console.warn('[SW] Pre-caching partial failure:', err);
       });
     }).then(() => self.skipWaiting())
   );
 });
 
-// Activate Event - clean old caches
+// Activate Event - clear old cache versions & take control immediately
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((name) => {
           if (name !== CACHE_NAME) {
+            console.log('[SW] Deleting legacy cache:', name);
             return caches.delete(name);
           }
         })
@@ -33,48 +36,75 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event
+// Listen for skipWaiting command from client app
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// Fetch Event - handles API, HTML navigation & static assets
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Ignore non-GET requests or chrome-extension URLs
+  // Ignore non-GET or chrome-extension / non-http requests
   if (request.method !== 'GET' || !url.protocol.startsWith('http')) {
     return;
   }
 
-  // API Requests: Network-first, fallback to offline response
+  // API Requests: Network-First with Offline JSON response
   if (url.pathname.startsWith('/api/')) {
     event.respondWith(
-      fetch(request).catch(() => {
-        return new Response(
-          JSON.stringify({ error: 'আপনি অফলাইনে আছেন। ইন্টারনেট সংযোগ চেক করুন।' }),
-          {
-            status: 503,
-            headers: { 'Content-Type': 'application/json' }
-          }
-        );
-      })
+      fetch(request)
+        .catch(() => {
+          return new Response(
+            JSON.stringify({ 
+              success: false, 
+              error: 'আপনি অফলাইনে আছেন। অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ চেক করুন।' 
+            }),
+            {
+              status: 503,
+              headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }
+          );
+        })
     );
     return;
   }
 
-  // Navigation requests (HTML pages)
+  // HTML Navigation Requests: Network-First, fallback to cached index.html
   if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(request).catch(() => {
-        return caches.match('/index.html') || caches.match('/');
-      })
+      fetch(request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const responseCopy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put('/', responseCopy));
+          }
+          return response;
+        })
+        .catch(() => {
+          return caches.match('/index.html')
+            .then((cachedPage) => cachedPage || caches.match('/'));
+        })
     );
     return;
   }
 
-  // Static Assets (JS, CSS, Images, Fonts): Cache-First, fallback to Network
+  // Static Assets (CSS, JS, Fonts, Images): Cache-First, fallback to Network & update cache
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       if (cachedResponse) {
+        // Fetch background update for dynamic assets if online
+        fetch(request).then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, networkResponse));
+          }
+        }).catch(() => {});
         return cachedResponse;
       }
+
       return fetch(request).then((networkResponse) => {
         if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
           return networkResponse;
@@ -84,6 +114,8 @@ self.addEventListener('fetch', (event) => {
           cache.put(request, responseToCache);
         });
         return networkResponse;
+      }).catch(() => {
+        // Fallback for missing image/asset if necessary
       });
     })
   );

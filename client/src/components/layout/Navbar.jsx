@@ -12,8 +12,10 @@ import {
   FiChevronDown,
   FiPlusCircle,
   FiEdit,
+  FiDownload,
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
+import { triggerPWAInstall } from '../common/PWAInstallPrompt';
 
 const BloodRequestModal = lazy(() => import('../common/BloodRequestModal'));
 
@@ -416,6 +418,14 @@ const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
+            <button
+              onClick={triggerPWAInstall}
+              className="p-2 text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors flex items-center gap-1.5 text-xs font-semibold"
+              title="অ্যাপ ইনস্টল করুন"
+            >
+              <FiDownload size={18} />
+              <span className="hidden xl:inline">ইন্সটল অ্যাপ</span>
+            </button>
             <RequestButton onClick={openRequestModal} variant="desktop" />
             <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
             {user ? (
@@ -493,6 +503,16 @@ const Navbar = () => {
                     </li>
                   ))}
                 </ul>
+                <button
+                  onClick={() => {
+                    closeMobileMenu();
+                    triggerPWAInstall();
+                  }}
+                  className="w-full py-2.5 px-3 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 border border-primary-200 dark:border-primary-800/60 hover:bg-primary-100 transition-colors"
+                >
+                  <FiDownload size={18} />
+                  <span>PBDG অ্যাপ ইন্সটল করুন</span>
+                </button>
                 <MobileUserMenu
                   user={user}
                   isOpen={isOpen}

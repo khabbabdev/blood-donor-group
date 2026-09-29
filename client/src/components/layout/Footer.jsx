@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiFacebook, FiTwitter, FiInstagram, FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
+import { FiFacebook, FiTwitter, FiInstagram, FiMail, FiPhone, FiMapPin, FiDownload } from 'react-icons/fi';
+import { triggerPWAInstall } from '../common/PWAInstallPrompt';
 
 const Footer = () => {
   return (
@@ -46,6 +47,15 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/services" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">সেবাসমূহ</Link>
+              </li>
+              <li>
+                <button 
+                  onClick={triggerPWAInstall}
+                  className="text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1.5 font-semibold transition-colors text-left"
+                >
+                  <FiDownload />
+                  <span>মোবাইল অ্যাপ ইন্সটল করুন</span>
+                </button>
               </li>
             </ul>
           </div>

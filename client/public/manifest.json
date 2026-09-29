@@ -1,13 +1,19 @@
 {
-  "name": "PBDG - রক্তদাতা গ্রুপ",
+  "id": "/",
+  "name": "PBDG - পানিতলাহাট ব্লাড ডোনার গ্রুপ",
   "short_name": "PBDG",
-  "description": "স্বেচ্ছায় রক্তদান করুন, জীবন বাঁচান — পীরগঞ্জ ব্লাড ডোনার গ্রুপ",
-  "start_url": "/",
+  "description": "স্বেচ্ছায় রক্তদান করুন, জীবন বাঁচান — পানিতলাহাট ব্লাড ডোনার গ্রুপ (PBDG)",
+  "start_url": "/?utm_source=pwa",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait",
   "theme_color": "#dc2626",
   "background_color": "#ffffff",
+  "lang": "bn",
+  "dir": "ltr",
+  "categories": ["health", "medical", "social"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/icons/icon-192x192.png",
@@ -26,6 +32,22 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "ডোনার খুঁজুন",
+      "short_name": "ডোনার",
+      "description": "জরুরী রক্তদাতা অনুসন্ধান করুন",
+      "url": "/donors?utm_source=pwa_shortcut",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "রক্তের আবেদন",
+      "short_name": "আবেদন",
+      "description": "জরুরী রক্তের জন্য আবেদন করুন",
+      "url": "/?action=request&utm_source=pwa_shortcut",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
     }
   ]
 }

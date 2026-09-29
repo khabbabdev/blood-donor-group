@@ -3,19 +3,25 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <title>PBDG - পানিতলাহাট ব্লাড ডোনার গ্রুপ</title>
   <meta name="description" content="স্বেচ্ছায় রক্তদান করুন, জীবন বাঁচান — পানিতলাহাট ব্লাড ডোনার গ্রুপ (PBDG)" />
   <meta name="theme-color" content="#dc2626" />
+  <meta name="application-name" content="PBDG" />
 
-  <!-- PWA & Apple Meta Tags -->
+  <!-- PWA & Mobile Meta Tags -->
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" type="image/png" href="/icons/icon-192x192.png" />
   <link rel="shortcut icon" href="/icons/icon-192x192.png" type="image/png" />
-  <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+  
+  <!-- Apple iOS PWA Compatibility -->
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="PBDG" />
+  <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" />
 
   <!-- Performance & Font Preload -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com" />
